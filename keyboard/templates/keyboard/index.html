@@ -1,0 +1,144 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{%static 'styles.css'%}">
+    {{ song.notes|json_script:"song-data" }}
+    
+    {% if song %}
+        {{ song.notes|json_script:"song-data" }}
+    {% endif %}
+    <script>
+        var currentSong = JSON.parse('{{ song_notes_json|default:"null"|escapejs }}');
+    </script>
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <script src="{%static 'script.js'%}" defer></script>
+</head>
+<body>
+    <h1 class="heading">Instant Piano Recorder</h1>
+    <div class="buttons">
+        {% if not song %}
+          <button class="record-button btn">Record</button>
+          <button class="save-button btn">Save</button>
+        {% else %}
+          <a href="{% url 'home' %}" class="btn rns">Record New Song</a>
+        {% endif %}
+        <button class="play-button btn {% if song %}show{% endif %}">Play</button>
+    </div>
+    <a href="#" class="btn song-link">View Recording</a>
+    <div class="chamber">
+        <div class="panel">
+            
+        </div>
+        <div class="keyboard">
+            <div data-note="C2" class="key white">1</div>
+            <div data-note="Db2" class="key black">2</div>
+            <div data-note="D2" class="key white">3</div>
+            <div data-note="Eb2" class="key black">4</div>
+            <div data-note="E2" class="key white">5</div>
+            <div data-note="F2" class="key white">7</div>
+            <div data-note="Gb2" class="key black">6</div>
+            <div data-note="G2" class="key white">9</div>
+            <div data-note="Ab2" class="key black">8</div>
+            <div data-note="A2" class="key white">-</div>
+            <div data-note="Bb2" class="key black">0</div>
+            <div data-note="B2" class="key white">=</div>
+    
+            <div data-note="C3" class="key white">a</div>
+            <div data-note="Db3" class="key black">w</div>
+            <div data-note="D3" class="key white">s</div>
+            <div data-note="Eb3" class="key black">e</div>
+            <div data-note="E3" class="key white">d</div>
+            <div data-note="F3" class="key white">f</div>
+            <div data-note="Gb3" class="key black">t</div>
+            <div data-note="G3" class="key white">g</div>
+            <div data-note="Ab3" class="key black">y</div>
+            <div data-note="A3" class="key white">h</div>
+            <div data-note="Bb3" class="key black">u</div>
+            <div data-note="B3" class="key white">j</div>
+    
+            <div data-note="C4" class="key white">k</div>
+            <div data-note="Db4" class="key black">i</div>
+            <div data-note="D4" class="key white">l</div>
+            <div data-note="Eb4" class="key black">o</div>
+            <div data-note="E4" class="key white">;</div>
+            <div data-note="F4" class="key white">'</div>
+            <div data-note="Gb4" class="key black">p</div>
+            <div data-note="G4" class="key white">,</div>
+            <div data-note="Ab4" class="key black">[</div>
+            <div data-note="A4" class="key white">.</div>
+            <div data-note="Bb4" class="key black">]</div>
+            <div data-note="B4" class="key white">/</div>
+    
+            <div data-note="C5" class="key white">z</div>
+            <div data-note="Db5" class="key black">S</div>
+            <div data-note="D5" class="key white">x</div>
+            <div data-note="Eb5" class="key black">D</div>
+            <div data-note="E5" class="key white">c</div>
+            <div data-note="F5" class="key white">v</div>
+            <div data-note="Gb5" class="key black">G</div>
+            <div data-note="G5" class="key white">b</div>
+            <div data-note="Ab5" class="key black">H</div>
+            <div data-note="A5" class="key white">n</div>
+            <div data-note="Bb5" class="key black">J</div>
+            <div data-note="B5" class="key white">m</div>
+        </div>
+    </div>
+
+    <audio id="C2" src="{%static 'C2.mp3'%}"></audio>
+    <audio id="Db2" src="{%static 'Db2.mp3'%}"></audio>
+    <audio id="D2" src="{%static 'D2.mp3'%}"></audio>
+    <audio id="Eb2" src="{%static 'Eb2.mp3'%}"></audio>
+    <audio id="E2" src="{%static 'E2.mp3'%}"></audio>
+    <audio id="F2" src="{%static 'F2.mp3'%}"></audio>
+    <audio id="Gb2" src="{%static 'Gb2.mp3'%}"></audio>
+    <audio id="G2" src="{%static 'G2.mp3'%}"></audio>
+    <audio id="Ab2" src="{%static 'Ab2.mp3'%}"></audio>
+    <audio id="A2" src="{%static 'A2.mp3'%}"></audio>
+    <audio id="Bb2" src="{%static 'Bb2.mp3'%}"></audio>
+    <audio id="B2" src="{%static 'B2.mp3'%}"></audio>
+
+    <audio id="C3" src="{%static 'C3.mp3'%}"></audio>
+    <audio id="Db3" src="{%static 'Db3.mp3'%}"></audio>
+    <audio id="D3" src="{%static 'D3.mp3'%}"></audio>
+    <audio id="Eb3" src="{%static 'Eb3.mp3'%}"></audio>
+    <audio id="E3" src="{%static 'E3.mp3'%}"></audio>
+    <audio id="F3" src="{%static 'F3.mp3'%}"></audio>
+    <audio id="Gb3" src="{%static 'Gb3.mp3'%}"></audio>
+    <audio id="G3" src="{%static 'G3.mp3'%}"></audio>
+    <audio id="Ab3" src="{%static 'Ab3.mp3'%}"></audio>
+    <audio id="A3" src="{%static 'A3.mp3'%}"></audio>
+    <audio id="Bb3" src="{%static 'Bb3.mp3'%}"></audio>
+    <audio id="B3" src="{%static 'B3.mp3'%}"></audio>
+
+    <audio id="C4" src="{%static 'C4.mp3'%}"></audio>
+    <audio id="Db4" src="{%static 'Db4.mp3'%}"></audio>
+    <audio id="D4" src="{%static 'D4.mp3'%}"></audio>
+    <audio id="Eb4" src="{%static 'Eb4.mp3'%}"></audio>
+    <audio id="E4" src="{%static 'E4.mp3'%}"></audio>
+    <audio id="F4" src="{%static 'F4.mp3'%}"></audio>
+    <audio id="Gb4" src="{%static 'Gb4.mp3'%}"></audio>
+    <audio id="G4" src="{%static 'G4.mp3'%}"></audio>
+    <audio id="Ab4" src="{%static 'Ab4.mp3'%}"></audio>
+    <audio id="A4" src="{%static 'A4.mp3'%}"></audio>
+    <audio id="Bb4" src="{%static 'Bb4.mp3'%}"></audio>
+    <audio id="B4" src="{%static 'B4.mp3'%}"></audio>
+
+    <audio id="C5" src="{%static 'C5.mp3'%}"></audio>
+    <audio id="Db5" src="{%static 'Db5.mp3'%}"></audio>
+    <audio id="D5" src="{%static 'D5.mp3'%}"></audio>
+    <audio id="Eb5" src="{%static 'Eb5.mp3'%}"></audio>
+    <audio id="E5" src="{%static 'E5.mp3'%}"></audio>
+    <audio id="F5" src="{%static 'F5.mp3'%}"></audio>
+    <audio id="Gb5" src="{%static 'Gb5.mp3'%}"></audio>
+    <audio id="G5" src="{%static 'G5.mp3'%}"></audio>
+    <audio id="Ab5" src="{%static 'Ab5.mp3'%}"></audio>
+    <audio id="A5" src="{%static 'A5.mp3'%}"></audio>
+    <audio id="Bb5" src="{%static 'Bb5.mp3'%}"></audio>
+    <audio id="B5" src="{%static 'B5.mp3'%}"></audio>
+</body>
+</html>
